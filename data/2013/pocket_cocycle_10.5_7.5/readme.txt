@@ -1,0 +1,1 @@
+this folder contains the cohomology generators with cutoff 10.5 and filtration 7.5

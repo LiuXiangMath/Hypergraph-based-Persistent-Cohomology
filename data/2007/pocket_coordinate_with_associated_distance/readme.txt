@@ -1,0 +1,1 @@
+this folder contains the adjacent distance for each atom

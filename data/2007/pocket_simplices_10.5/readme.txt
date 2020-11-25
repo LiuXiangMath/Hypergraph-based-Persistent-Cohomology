@@ -1,0 +1,1 @@
+this folder contains the associated simplicial complex of the hypergraph
