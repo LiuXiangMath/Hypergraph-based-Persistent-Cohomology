@@ -398,7 +398,7 @@ def simplices_to_file(start,end,cutoff,kill_time):
     
     for i in range(start,end):
         name = all_data[i]
-        print('process {0}-th data {1}'.format(i,name))
+        print('create hypergraph, process {0}-th data {1}'.format(i,name))
         for P in range(4):
             for L in range(9):
                 filename = pre + '../data/' + Year + '/pocket_coordinate/' + name + '_' + Protein_Atom[P] + '_' + Ligand_Atom[L] +'_coordinate.csv'
@@ -711,7 +711,7 @@ def bar_and_cocycle_to_file(start,end,cutoff,filtration):
     t = len(all_data)
     for i in range(start,end):
         name = all_data[i]
-        print('process {0}-th  bar {1}'.format(i,name))
+        print('compute persistent cohomology, process {0}-th  bar {1}'.format(i,name))
         for P in range(4):
             for L in range(9):
                 filename1 = pre + '../data/' + Year + '/pocket_coordinate/' + name + '_' + Protein_Atom[P] + '_' + Ligand_Atom[L] +'_coordinate.csv'
@@ -1298,33 +1298,46 @@ def run_for_PDBbind_2007():
     '''
     ##############################################################
     # extract coordinate
-    pocket_coordinate_data_to_file(0,1300) 
+    print('extract coordinate start')
+    pocket_coordinate_data_to_file(0,1300)
+    print('extract coordinate end')
     
     # create hypergraph
-    simplices_to_file(0,1300,10.5,0)      
+    print('create hypergraph start')
+    simplices_to_file(0,1300,10.5,0)
+    print('create hypergraph end')
     
     # compute persistent cohomology
+    print('compute persistent cohomology start')
     bar_and_cocycle_to_file(0,1300,10.5,7.5) 
+    print('compute persistent cohomology end')
     
     # feature generation
+    print('HPC feature generation start')
     get_feature_of_train(0,1105,10.5,7.5,0.1) 
     get_feature_of_test(0,195,10.5,7.5,0.1)
+    print('HPC feature generation end')
     get_target_matrix_of_train()
     get_target_matrix_of_test()
-    create_coordinate_with_associated_distance(0,1300)    
+    create_coordinate_with_associated_distance(0,1300)
+    print('HWPC feature generation start')
     get_cocycle_feature_of_train(0,1105,10.5,7.5,0.1,2.5)
     get_cocycle_feature_of_test(0,195,10.5,7.5,0.1,2.5)    
     get_cocycle_feature_of_train(0,1105,10.5,7.5,0.1,10)
     get_cocycle_feature_of_test(0,195,10.5,7.5,0.1,10)
+    print('HWPC feature generation end')
+    print('combined feature generation start')
     get_combined_feature('train',10.5,7.5,0.1)
-    get_combined_feature('test',10.5,7.5,0.1) 
+    get_combined_feature('test',10.5,7.5,0.1)
+    print('combined feature generation end')
     
     # machine learning
+    print('machine learning start')
     get_pearson_correlation('HPC','')
     get_pearson_correlation('HWPC2.5','eta_2.5_cocycle_')
     get_pearson_correlation('HWPC10','eta_10_cocycle_')
     get_pearson_correlation('combined', 'mix_eta_2.5_10_cocycle_')
-    
+    print('machine learning end')
 
     
 run_for_PDBbind_2007()
