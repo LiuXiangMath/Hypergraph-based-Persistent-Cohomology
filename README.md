@@ -2,13 +2,30 @@ Hypergraph based Persistent cohomology(HPC) for molecular representations in dru
 ====
     This manual is for the code implementation of paper 'Hypergraph based Persistent Cohomology(HPC) for molecular
     representations in drug design'
-# 1. Software configuration
+    
+****
+# Contents
+* [1. Software configuration](#Software-configuration)
+* [2. Flow of HPC-ML model](#Flow-of-HPC-ML-model)
+* [3. Details about each step](#Details-about-each-step)
+    * [3.1 Data preparation](#Data-preparation)
+    * [3.2 Extract coordinate](#Extract-coordinate)
+    * [3.3 Create hypergraph](#Create-hypergraph)
+    * [3.4 Compute persistent barcode](#Compute-persistent-cohomology)
+    * [3.5 Get enriched barcode and feature generation](#Get-enriched-barcode-and-feature-generation)
+    * [3.6 Machine learning](#Machine-learning)
+* [4. Get the results](#Get-the-results)
+
+# Software configuration
+---
         Platform: Python>=3.6
         Packages needed: math, numpy>=1.18.1, scipy>=1.4.1, scikit-learn>=0.22.1
-# 2. Flow of HPC-ML model
+# Flow of HPC-ML model
+---
 ![flow](Figures/flow_of_code.png)
-# 3. Details about each step
-## 3.1 Data preparation
+# Details about each step
+---
+## Data preparation
 In order to make the protein-ligand binding affinity prediction, you need to download the PDBbind data from this
 link http://www.pdbbind.org.cn/. To ensure you can use our code easily, you need to build some folders with the
 following structure:  
@@ -36,7 +53,7 @@ information, which contributes to the enriched barcode generation
 do is putting all the entries into the folder ’refined’ for three databases.
 * `Further, we have added all the data needed for PDBbind-2007, you can clone our code and run the script
 code_for_PDBbind2007.py to repeat our results for PDBbind2007. You can take it as an example`
-## 3.2 Extract coordinate
+## Extract coordinate
 With the PDBbind data, we firstly need to extract the atom coordinates. Here, for each protein-ligand complex,
 totally 36 atom-combinations are formed with C, N O and S from protein and C, N, O, P, S, F, Cl, Br and I from ligand,
 which results in 36 hypergraphs for each protein-ligand complex. In our code, 36 pair files are created, each pair is a
@@ -57,7 +74,7 @@ def pocket_coordinate_data_to_file(start,end):
     '''
     ####################################################################################
 ```
-## 3.3 Create hypergraph
+## Create hypergraph
 After getting the coordinate data, now we can construct the hypergraph. In our paper, we have proven that it suffices
 to build the filtered associated simplicial complex of the filtered hypergraph because their persistent cohomology are
 same. So here we construct the associated simplicial complex of the hypergraph. Major functions are as follows:  
@@ -86,7 +103,7 @@ def create_simplices_with_filtration(atom,cutoff,name,P_atom,L_atom,kill_time):
     '''
     ###########################################################################################
 ```
-## 3.4 Compute persistent barcode
+## Compute persistent cohomology
 With the associated simplicial complex of the hypergraph, we can compute its persistent cohomology barcode. The
 coefficient we use is 푍/2. Major functions are as follows:  
 ```python
@@ -103,7 +120,7 @@ def get_result(point_cloud,simplices_with_filtration):
     '''
     ###########################################################################################
 ```
-## 3.5 Get enriched barcode and feature generation
+## Get enriched barcode and feature generation
 By adding some weight to the barcode, we can get the enriched barcode. Here, we combine the enriched barcode
 generation and feature generation process. Totally, we mainly have three parts, major functions are as follows:  
 (1). HPC feature generation  
@@ -170,13 +187,14 @@ def get_combined_feature(typ,cutoff,filtration,unit):
     '''
     #####################################################################
 ```
-## 3.6 Machine learning
+## Machine learning
 After getting the training and testing features, it is a routine procedure to use machine learning algorithm to make
 the prediction. we use gradient boosting tree to make the regression, the parameter setting are as follows:  
 |No. of Estimators | Learning rate | Max depth | Subsample | Min_samples_split | Loss function | Max features | Repetitions |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 |40000 | 0.001 | 9 | 0.7 | 2 | Least square | SQRT | 10 |
-# 4. Get the results
+# Get the results
+---
 If you have successfully build the folders, insert the PDBbind data and import the packages we mentioned. Then
 you can repeat our results by running these three python scripts: code_for_PDBbind2007.py, code_for_PDBbind2013.py
 and code_for_PDBbind2016.py.   
