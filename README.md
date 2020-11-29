@@ -105,7 +105,7 @@ def create_simplices_with_filtration(atom,cutoff,name,P_atom,L_atom,kill_time):
 ```
 ## Compute persistent cohomology
 With the associated simplicial complex of the hypergraph, we can compute its persistent cohomology barcode. The
-coefficient we use is 푍/2. Major functions are as follows:  
+coefficient we use is Z/2. Major functions are as follows:  
 ```python
 def get_result(point_cloud,simplices_with_filtration):
     ###########################################################################################
