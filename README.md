@@ -203,9 +203,17 @@ our results for PDBbind2007 by running python script code_for_PDBbind2007.py. Mo
 following command one by one:`
 ```linux
 git clone https://github.com/LiuXiangMath/Hypergraph-based-Persistent-Cohomology.git
+```
+```linux
 cd Hypergraph-based-Persistent-Cohomology
+```
+```linux
 pip install -r requirements.txt
+```
+```linux
 cd code
+```
+```linux
 python code_for_PDBbind2007.py
 ```
 
