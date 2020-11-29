@@ -179,8 +179,17 @@ the prediction. we use gradient boosting tree to make the regression, the parame
 # 4. Get the results
 If you have successfully build the folders, insert the PDBbind data and import the packages we mentioned. Then
 you can repeat our results by running these three python scripts: code_for_PDBbind2007.py, code_for_PDBbind2013.py
-and code_for_PDBbind2016.py. `We have added all the needed data into the folder for PDBbind2007, so just clone our
-project, then you can repeat our results for PDBbind2007 by running python script code_for_PDBbind2007.py`
+and code_for_PDBbind2016.py.   
+`We have added all the needed data into the folder for PDBbind2007, so just clone our project, then you can repeat
+our results for PDBbind2007 by running python script code_for_PDBbind2007.py. More specifically, you can run the
+following command one by one:`
+```linux
+git clone https://github.com/LiuXiangMath/Hypergraph-based-Persistent-Cohomology.git
+cd Hypergraph-based-Persistent-Cohomology
+pip install -r requirements.txt
+cd code
+python code_for_PDBbind2007.py
+```
 
 ***
 
