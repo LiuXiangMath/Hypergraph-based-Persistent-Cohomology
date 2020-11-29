@@ -11,7 +11,7 @@ Hypergraph based Persistent cohomology(HPC) for molecular representations in dru
     * [3.1 Data preparation](#Data-preparation)
     * [3.2 Extract coordinate](#Extract-coordinate)
     * [3.3 Create hypergraph](#Create-hypergraph)
-    * [3.4 Compute persistent barcode](#Compute-persistent-cohomology)
+    * [3.4 Compute persistent cohomology](#Compute-persistent-cohomology)
     * [3.5 Get enriched barcode and feature generation](#Get-enriched-barcode-and-feature-generation)
     * [3.6 Machine learning](#Machine-learning)
 * [4. Get the results](#Get-the-results)
